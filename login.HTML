@@ -1,0 +1,864 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Wow Food - Login</title>  
+    <style>  
+        * {  
+            box-sizing: border-box;  
+            margin: 0;  
+            padding: 0;  
+        }  
+        
+        body {  
+            background: #0a0a0a;  
+            font-family: 'Arial', sans-serif;  
+            color: #fff;  
+            min-height: 100vh;  
+            overflow-x: hidden;  
+        }  
+
+        /* Animated Background */  
+        .animated-bg {  
+            position: fixed;  
+            top: 0;  
+            left: 0;  
+            width: 100%;  
+            height: 100%;  
+            background:   
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),  
+                radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.1) 0%, transparent 50%),  
+                radial-gradient(circle at 40% 80%, rgba(40, 167, 69, 0.1) 0%, transparent 50%);  
+            z-index: -1;  
+            animation: float 20s ease-in-out infinite;  
+        }  
+
+        @keyframes float {  
+            0%, 100% { transform: translateY(0px); }  
+            50% { transform: translateY(-20px); }  
+        }  
+
+        /* Navbar Styles */  
+        .navbar {  
+            background: rgba(10, 10, 10, 0.95);  
+            padding: 15px 0;  
+            position: fixed;  
+            top: 0;  
+            width: 100%;  
+            z-index: 1000;  
+            backdrop-filter: blur(20px);  
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);  
+        }  
+
+        .container {  
+            max-width: 1200px;  
+            margin: 0 auto;  
+            padding: 0 20px;  
+        }  
+
+        .logo {  
+            float: left;  
+        }  
+
+        .logo img {  
+            height: 40px;  
+        }  
+
+        .menu {  
+            float: right;  
+        }  
+
+        .menu ul {  
+            list-style: none;  
+            display: flex;  
+            align-items: center;  
+        }  
+
+        .menu li {  
+            margin-left: 30px;  
+        }  
+
+        .menu a {  
+            color: #fff;  
+            text-decoration: none;  
+            font-weight: 500;  
+            transition: color 0.3s ease;  
+            position: relative;  
+        }  
+
+        .menu a:hover {  
+            color: #ff6b6b;  
+        }  
+
+        .menu a::after {  
+            content: '';  
+            position: absolute;  
+            bottom: -5px;  
+            left: 0;  
+            width: 0;  
+            height: 2px;  
+            background: #ff6b6b;  
+            transition: width 0.3s ease;  
+        }  
+
+        .menu a:hover::after {  
+            width: 100%;  
+        }  
+
+        .clearfix::after {  
+            content: "";  
+            display: table;  
+            clear: both;  
+        }  
+
+        /* Main Content */  
+        .main-content {  
+            margin-top: 80px;  
+            min-height: calc(100vh - 80px);  
+            display: flex;  
+            align-items: center;  
+            justify-content: center;  
+            padding: 40px 20px;  
+        }  
+
+        /* Login Form Container */  
+        .login-container {  
+            background: rgba(255, 255, 255, 0.05);  
+            backdrop-filter: blur(20px);  
+            border: 1px solid rgba(255, 255, 255, 0.1);  
+            border-radius: 20px;  
+            padding: 50px;  
+            max-width: 450px;  
+            width: 100%;  
+            text-align: center;  
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);  
+            animation: slideUp 0.6s ease-out;  
+        }  
+
+        @keyframes slideUp {  
+            from {  
+                opacity: 0;  
+                transform: translateY(30px);  
+            }  
+            to {  
+                opacity: 1;  
+                transform: translateY(0);  
+            }  
+        }  
+
+        .login-title {  
+            font-size: 2.5rem;  
+            margin-bottom: 10px;  
+            font-weight: 300;  
+            color: #ff6b6b;  
+            letter-spacing: 1px;  
+        }  
+
+        .login-subtitle {  
+            font-size: 1rem;  
+            color: #ccc;  
+            margin-bottom: 40px;  
+        }  
+
+        /* Form Styles */  
+        .form-group {  
+            margin-bottom: 25px;  
+            text-align: left;  
+        }  
+
+        .form-label {  
+            display: block;  
+            margin-bottom: 8px;  
+            font-weight: 500;  
+            color: #fff;  
+        }  
+
+        .form-input {  
+            width: 100%;  
+            padding: 15px 20px;  
+            background: rgba(255, 255, 255, 0.05);  
+            border: 1px solid rgba(255, 255, 255, 0.1);  
+            border-radius: 10px;  
+            color: #fff;  
+            font-size: 1rem;  
+            transition: all 0.3s ease;  
+            backdrop-filter: blur(10px);  
+        }  
+
+        .form-input:focus {  
+            outline: none;  
+            border-color: #ff6b6b;  
+            background: rgba(255, 255, 255, 0.1);  
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.1);  
+        }  
+
+        .form-input::placeholder {  
+            color: #888;  
+        }
+
+        .form-input.invalid {
+            border-color: #ff4444;
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.2);
+        }
+
+        .validation-hint {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .validation-hint.show {
+            display: block;
+        }
+
+        .validation-hint.error {
+            color: #ff6b6b;
+        }
+
+        /* Button Styles */  
+        .btn {  
+            display: inline-block;  
+            padding: 15px 30px;  
+            border: none;  
+            border-radius: 10px;  
+            font-size: 1rem;  
+            font-weight: 600;  
+            text-decoration: none;  
+            text-align: center;  
+            cursor: pointer;  
+            transition: all 0.3s ease;  
+            position: relative;  
+            overflow: hidden;  
+            letter-spacing: 0.5px;  
+            margin: 8px;  
+        }  
+
+        .btn-primary {  
+            background: #ff6b6b;  
+            color: #fff;  
+            width: 100%;  
+        }  
+
+        .btn-primary:hover {  
+            background: #ff5252;  
+            transform: translateY(-2px);  
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);  
+        }  
+
+        .btn-secondary {  
+            background: transparent;  
+            color: #ff6b6b;  
+            border: 2px solid #ff6b6b;  
+            width: calc(50% - 10px);  
+        }  
+
+        .btn-secondary:hover {  
+            background: #ff6b6b;  
+            color: #fff;  
+            transform: translateY(-2px);  
+        }  
+
+        .btn-link {  
+            background: none;  
+            color: #ff6b6b;  
+            border: none;  
+            text-decoration: underline;  
+            font-size: 0.9rem;  
+            cursor: pointer;  
+            transition: color 0.3s ease;  
+        }  
+
+        .btn-link:hover {  
+            color: #ff5252;  
+        }  
+
+        /* Button Container */  
+        .button-group {  
+            display: flex;  
+            gap: 15px;  
+            margin-top: 30px;  
+        }  
+
+        .single-button {  
+            width: 100%;  
+        }  
+
+        /* Divider */  
+        .divider {  
+            margin: 30px 0;  
+            text-align: center;  
+            position: relative;  
+        }  
+
+        .divider::before {  
+            content: '';  
+            position: absolute;  
+            top: 50%;  
+            left: 0;  
+            right: 0;  
+            height: 1px;  
+            background: rgba(255, 255, 255, 0.1);  
+        }  
+
+        .divider span {  
+            background: rgba(10, 10, 10, 0.9);  
+            padding: 0 15px;  
+            color: #888;  
+            font-size: 0.9rem;  
+        }  
+
+        /* Error Message */  
+        .error-message {  
+            background: rgba(255, 0, 0, 0.1);  
+            border: 1px solid rgba(255, 0, 0, 0.3);  
+            color: #ff6b6b;  
+            padding: 15px;  
+            border-radius: 10px;  
+            margin-bottom: 20px;  
+            font-size: 0.9rem;  
+            display: none;  
+        }  
+
+        .success-message {  
+            background: rgba(0, 255, 0, 0.1);  
+            border: 1px solid rgba(0, 255, 0, 0.3);  
+            color: #4caf50;  
+            padding: 15px;  
+            border-radius: 10px;  
+            margin-bottom: 20px;  
+            font-size: 0.9rem;  
+            display: none;  
+        }  
+
+        /* Loading Animation */  
+        .loading {  
+            display: none;  
+            margin: 20px 0;  
+        }  
+
+        .loading::after {  
+            content: '';  
+            display: inline-block;  
+            width: 20px;  
+            height: 20px;  
+            border: 2px solid #ff6b6b;  
+            border-top: 2px solid transparent;  
+            border-radius: 50%;  
+            animation: spin 1s linear infinite;  
+        }  
+
+        @keyframes spin {  
+            0% { transform: rotate(0deg); }  
+            100% { transform: rotate(360deg); }  
+        }  
+
+        /* Responsive Design */  
+        @media (max-width: 768px) {  
+            .menu {  
+                float: none;  
+                clear: both;  
+                margin-top: 10px;  
+            }  
+
+            .menu ul {  
+                flex-wrap: wrap;  
+                justify-content: center;  
+            }  
+
+            .menu li {  
+                margin: 5px 15px;  
+            }  
+
+            .navbar {  
+                position: relative;  
+                padding: 20px 0;  
+            }  
+
+            .main-content {  
+                margin-top: 0;  
+                padding: 20px;  
+            }  
+
+            .login-container {  
+                padding: 30px 20px;  
+            }  
+
+            .login-title {  
+                font-size: 2rem;  
+            }  
+
+            .btn-secondary {  
+                width: 100%;  
+                margin-bottom: 10px;  
+            }  
+
+            .button-group {  
+                flex-direction: column;  
+                gap: 10px;  
+            }  
+        }  
+    </style>
+</head>  
+<body>  
+    <div class="animated-bg"></div>  
+    
+    <!-- Navbar Section -->  
+    <section class="navbar">  
+        <div class="container">  
+            <div class="logo">  
+                <a href="index.html" title="Logo">  
+                    <img src="images/logo.png" alt="Restaurant Logo" class="bg-img">  
+                </a>  
+            </div>  
+            <div class="menu">  
+                <ul>  
+                    <li><a href="index.html">Home</a></li>  
+                    <li><a href="categories.html">Categories</a></li>  
+                    <li><a href="foods.html">Foods</a></li>  
+                    <li><a href="about-us.html">About Us</a></li>  
+                    <li><a href="login.html" class="active">Login</a></li>  
+                </ul>  
+            </div>  
+            <div class="clearfix"></div>  
+        </div>  
+    </section>  
+
+    <!-- Main Content -->  
+    <div class="main-content">  
+        <div class="login-container">  
+            <h1 class="login-title">Welcome Back</h1>  
+            <p class="login-subtitle">Login to continue your culinary journey</p>  
+              
+            <div class="error-message" id="errorMessage"></div>  
+            <div class="success-message" id="successMessage"></div>  
+            <div class="loading" id="loading"></div>  
+              
+            <form id="loginForm">  
+                <div class="form-group">  
+                    <label class="form-label" for="customerId">Customer ID</label>  
+                    <input type="text" id="customerId" name="customerId" class="form-input"   
+                           placeholder="Enter your Customer ID (letters and numbers only)" 
+                           pattern="[A-Za-z0-9]+" 
+                           title="Only letters and numbers are allowed"
+                           maxlength="20"
+                           required>
+                    <div class="validation-hint" id="validationHint">
+                        Only letters (A-Z, a-z) and numbers (0-9) are allowed
+                    </div>
+                </div>  
+                  
+                <button type="submit" class="btn btn-primary single-button">  
+                    LOGIN  
+                </button>  
+            </form>  
+              
+            <div class="divider">  
+                <span>Need help?</span>  
+            </div>  
+              
+            <div class="button-group">  
+                <button type="button" class="btn btn-secondary" onclick="forgotUserId()">  
+                    Forgot User ID  
+                </button>  
+                <button type="button" class="btn btn-secondary" onclick="registerUser()">  
+                    Register  
+                </button>  
+            </div>  
+        </div>  
+    </div>  
+
+    <script>  
+        // Configuration - Update these with your actual registration page details
+        const REGISTRATION_PAGE_URL = 'registration.html'; // Change this to your registration page URL
+        
+        // Function to validate alphanumeric input
+        function validateAlphanumeric(input) {
+            const alphanumericRegex = /^[A-Za-z0-9]*$/;
+            return alphanumericRegex.test(input);
+        }
+
+        // Function to restrict input to alphanumeric characters only
+        function restrictToAlphanumeric(event) {
+            const char = String.fromCharCode(event.which);
+            if (!validateAlphanumeric(char)) {
+                event.preventDefault();
+                return false;
+            }
+        }
+
+        // Real-time validation for customer ID input
+        document.addEventListener('DOMContentLoaded', function() {
+            const customerIdInput = document.getElementById('customerId');
+            const validationHint = document.getElementById('validationHint');
+
+            // Prevent non-alphanumeric characters from being typed
+            customerIdInput.addEventListener('keypress', restrictToAlphanumeric);
+
+            // Handle paste events to filter out non-alphanumeric characters
+            customerIdInput.addEventListener('paste', function(event) {
+                event.preventDefault();
+                const pastedData = (event.clipboardData || window.clipboardData).getData('text');
+                const cleanedData = pastedData.replace(/[^A-Za-z0-9]/g, '');
+                customerIdInput.value = cleanedData;
+                validateInput();
+            });
+
+            // Real-time validation on input
+            customerIdInput.addEventListener('input', validateInput);
+
+            // Validation on focus out
+            customerIdInput.addEventListener('blur', validateInput);
+
+            function validateInput() {
+                const value = customerIdInput.value.trim();
+                
+                if (value === '') {
+                    customerIdInput.classList.remove('invalid');
+                    validationHint.classList.remove('show', 'error');
+                    return;
+                }
+
+                if (!validateAlphanumeric(value)) {
+                    customerIdInput.classList.add('invalid');
+                    validationHint.textContent = 'Invalid characters detected. Only letters and numbers are allowed.';
+                    validationHint.classList.add('show', 'error');
+                    // Clean the input
+                    customerIdInput.value = value.replace(/[^A-Za-z0-9]/g, '');
+                } else {
+                    customerIdInput.classList.remove('invalid');
+                    validationHint.textContent = 'Only letters (A-Z, a-z) and numbers (0-9) are allowed';
+                    validationHint.classList.add('show');
+                    validationHint.classList.remove('error');
+                }
+            }
+        });
+        
+        // Function to fetch customer data from registration page
+        async function fetchCustomerData() {
+            try {
+                // Try to get data from registration page
+                const response = await fetch(REGISTRATION_PAGE_URL);
+                if (!response.ok) {
+                    throw new Error('Registration page not accessible');
+                }
+                
+                const registrationPageContent = await response.text();
+                
+                // Parse the HTML content to extract customer data
+                // This assumes the registration page stores data in localStorage or has a specific format
+                // You may need to adjust this based on your registration page implementation
+                
+                // Try to extract data from localStorage (if registration page uses it)
+                let customerData = {};
+                try {
+                    const storedData = localStorage.getItem('customerDatabase') || 
+                                     localStorage.getItem('customers') || 
+                                     localStorage.getItem('registeredUsers');
+                    if (storedData) {
+                        customerData = JSON.parse(storedData);
+                    }
+                } catch (e) {
+                    console.log('No localStorage data found');
+                }
+                
+                // If no data found, try to communicate with registration page
+                if (Object.keys(customerData).length === 0) {
+                    // Alternative: Use postMessage to communicate with registration page
+                    customerData = await getDataFromRegistrationPage();
+                }
+                
+                return customerData;
+                
+            } catch (error) {
+                console.error('Error fetching customer data:', error);
+                // Fallback to demo data if registration page is not available
+                return getDefaultCustomerData();
+            }
+        }
+        
+        // Alternative method to get data from registration page using iframe communication
+        async function getDataFromRegistrationPage() {
+            return new Promise((resolve) => {
+                // Create hidden iframe to load registration page
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = REGISTRATION_PAGE_URL;
+                
+                iframe.onload = () => {
+                    try {
+                        // Try to access iframe's localStorage
+                        const iframeWindow = iframe.contentWindow;
+                        const data = iframeWindow.localStorage.getItem('customerDatabase') ||
+                                   iframeWindow.localStorage.getItem('customers') ||
+                                   iframeWindow.localStorage.getItem('registeredUsers') ||
+                                   '{}';
+                        
+                        document.body.removeChild(iframe);
+                        resolve(JSON.parse(data));
+                    } catch (error) {
+                        console.log('Cannot access iframe data:', error);
+                        document.body.removeChild(iframe);
+                        resolve(getDefaultCustomerData());
+                    }
+                };
+                
+                iframe.onerror = () => {
+                    document.body.removeChild(iframe);
+                    resolve(getDefaultCustomerData());
+                };
+                
+                document.body.appendChild(iframe);
+                
+                // Timeout after 5 seconds
+                setTimeout(() => {
+                    if (document.body.contains(iframe)) {
+                        document.body.removeChild(iframe);
+                        resolve(getDefaultCustomerData());
+                    }
+                }, 5000);
+            });
+        }
+        
+        // Fallback demo data
+        function getDefaultCustomerData() {
+            return {
+                'CUST001': { id: 'CUST001', phone: '9876543210', name: 'John Doe' },  
+                'CUST002': { id: 'CUST002', phone: '9876543211', name: 'Jane Smith' },  
+                'CUST003': { id: 'CUST003', phone: '9876543212', name: 'Bob Johnson' }
+            };
+        }
+        
+        // Store customer database
+        let customerDatabase = {};
+        
+        // Initialize customer data on page load
+        window.addEventListener('load', async function() {
+            document.body.style.opacity = '1';
+            customerDatabase = await fetchCustomerData();
+            console.log('Customer database loaded:', Object.keys(customerDatabase).length, 'customers');
+        });
+
+        // Login form submission  
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {  
+            e.preventDefault();  
+              
+            const customerId = document.getElementById('customerId').value.trim();  
+            const errorMessage = document.getElementById('errorMessage');  
+            const successMessage = document.getElementById('successMessage');  
+            const loading = document.getElementById('loading');  
+              
+            // Clear previous messages  
+            errorMessage.style.display = 'none';  
+            successMessage.style.display = 'none';  
+              
+            if (!customerId) {  
+                showError('Please enter your Customer ID');  
+                return;  
+            }
+
+            // Validate alphanumeric format
+            if (!validateAlphanumeric(customerId)) {
+                showError('Customer ID must contain only letters and numbers');
+                return;
+            }
+              
+            // Show loading  
+            loading.style.display = 'block';  
+              
+            // Refresh customer data from registration page before validation
+            try {
+                customerDatabase = await fetchCustomerData();
+            } catch (error) {
+                console.error('Error refreshing customer data:', error);
+            }
+            
+            // Simulate API call  
+            setTimeout(() => {  
+                loading.style.display = 'none';  
+                  
+                if (customerDatabase[customerId]) {  
+                    showSuccess('Login successful! Redirecting to categories...');  
+                    setTimeout(() => {  
+                        window.location.href = 'categories.html';  
+                    }, 1500);  
+                } else {  
+                    showError('Invalid Customer ID. Please check and try again or register first.');  
+                }  
+            }, 1000);  
+        });  
+
+        // Forgot User ID function  
+        async function forgotUserId() {
+            // Refresh customer data from registration page
+            try {
+                customerDatabase = await fetchCustomerData();
+            } catch (error) {
+                console.error('Error refreshing customer data:', error);
+            }
+            
+            // Create modal for forgot user ID  
+            const modal = document.createElement('div');  
+            modal.style.cssText = `  
+                position: fixed;  
+                top: 0;  
+                left: 0;  
+                width: 100%;  
+                height: 100%;  
+                background: rgba(0, 0, 0, 0.8);  
+                display: flex;  
+                align-items: center;  
+                justify-content: center;  
+                z-index: 2000;  
+            `;  
+              
+            modal.innerHTML = `  
+                <div style="  
+                    background: rgba(255, 255, 255, 0.05);  
+                    backdrop-filter: blur(20px);  
+                    border: 1px solid rgba(255, 255, 255, 0.1);  
+                    border-radius: 20px;  
+                    padding: 40px;  
+                    max-width: 400px;  
+                    width: 90%;  
+                    text-align: center;  
+                    color: white;  
+                ">  
+                    <h2 style="color: #ff6b6b; margin-bottom: 20px; font-weight: 300;">Forgot User ID</h2>  
+                    <p style="margin-bottom: 30px; color: #ccc;">Enter your phone number to retrieve your Customer ID</p>  
+                      
+                    <div style="margin-bottom: 20px;">  
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">Phone Number</label>  
+                        <input type="tel" id="phoneNumber" style="  
+                            width: 100%;  
+                            padding: 15px 20px;  
+                            background: rgba(255, 255, 255, 0.05);  
+                            border: 1px solid rgba(255, 255, 255, 0.1);  
+                            border-radius: 10px;  
+                            color: #fff;  
+                            font-size: 1rem;  
+                        " placeholder="Enter your phone number" maxlength="10">  
+                    </div>  
+                      
+                    <div id="forgotResult" style="margin-bottom: 20px;"></div>  
+                      
+                    <div style="display: flex; gap: 10px;">  
+                        <button onclick="retrieveUserId()" style="  
+                            flex: 1;  
+                            padding: 12px 20px;  
+                            background: #ff6b6b;  
+                            color: white;  
+                            border: none;  
+                            border-radius: 10px;  
+                            cursor: pointer;  
+                            font-weight: 600;  
+                        ">Retrieve ID</button>  
+                        <button onclick="closeModal()" style="  
+                            flex: 1;  
+                            padding: 12px 20px;  
+                            background: transparent;  
+                            color: #ff6b6b;  
+                            border: 2px solid #ff6b6b;  
+                            border-radius: 10px;  
+                            cursor: pointer;  
+                            font-weight: 600;  
+                        ">Close</button>  
+                    </div>  
+                </div>  
+            `;  
+              
+            document.body.appendChild(modal);  
+        }  
+
+        // Retrieve User ID function  
+        async function retrieveUserId() {
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();  
+            const resultDiv = document.getElementById('forgotResult');  
+              
+            if (!phoneNumber) {  
+                resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Please enter your phone number</p>';  
+                return;  
+            }  
+              
+            if (phoneNumber.length !== 10) {  
+                resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Please enter a valid 10-digit phone number</p>';  
+                return;  
+            }  
+            
+            // Refresh customer data from registration page
+            try {
+                customerDatabase = await fetchCustomerData();
+            } catch (error) {
+                console.error('Error refreshing customer data:', error);
+            }
+              
+            // Find customer by phone number  
+            const customer = Object.values(customerDatabase).find(c => c.phone === phoneNumber);  
+              
+            if (customer) {  
+                resultDiv.innerHTML = `  
+                    <div style="  
+                        background: rgba(0, 255, 0, 0.1);  
+                        border: 1px solid rgba(0, 255, 0, 0.3);  
+                        color: #4caf50;  
+                        padding: 15px;  
+                        border-radius: 10px;  
+                        font-size: 0.9rem;  
+                    ">  
+                        <strong>Your Customer ID: ${customer.id}</strong><br>  
+                        <small>Please save this ID for future logins</small>  
+                    </div>  
+                `;  
+            } else {  
+                resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Phone number not found. Please register first.</p>';  
+            }  
+        }  
+
+        // Register function - redirect to registration page
+        function registerUser() {  
+            // Redirect to registration page instead of showing modal
+            window.location.href = REGISTRATION_PAGE_URL;
+        }  
+
+        // Close modal function  
+        function closeModal() {  
+            const modal = document.querySelector('div[style*="position: fixed"]');  
+            if (modal) {  
+                modal.remove();  
+            }  
+        }  
+
+        // Helper functions  
+        function showError(message) {  
+            const errorDiv = document.getElementById('errorMessage');  
+            errorDiv.textContent = message;  
+            errorDiv.style.display = 'block';  
+        }  
+
+        function showSuccess(message) {  
+            const successDiv = document.getElementById('successMessage');  
+            successDiv.textContent = message;  
+            successDiv.style.display = 'block';  
+        }  
+
+        // Close modal on outside click  
+        document.addEventListener('click', function(e) {  
+            if (e.target.style.position === 'fixed') {  
+                closeModal();  
+            }  
+        });  
+        
+        // API for registration page to update customer data
+        window.updateCustomerDatabase = function(newData) {
+            customerDatabase = { ...customerDatabase, ...newData };
+            console.log('Customer database updated from registration page');
+        };
+        
+        // API for registration page to get customer data
+        window.getCustomerDatabase = function() {
+            return customerDatabase;
+        };
+    </script>
+</body>  
+</html>

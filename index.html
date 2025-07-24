@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wow Food - Home</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #0a0a0a;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(40, 167, 69, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            float: left;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .menu {
+            float: right;
+        }
+
+        .menu ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu li {
+            margin-left: 30px;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .menu a:hover {
+            color: #ff6b6b;
+        }
+
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b6b;
+            transition: width 0.3s ease;
+        }
+
+        .menu a:hover::after {
+            width: 100%;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: #ff6b6b;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.7s forwards;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 40px;
+            color: #ccc;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.9s forwards;
+        }
+
+        .hero-cta {
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.1s forwards;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #ff6b6b;
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            color: #fff;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 80px;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 40px 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+            color: #ff6b6b;
+        }
+
+        .feature-item p {
+            color: #ccc;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* Process Section */
+        .process {
+            padding: 100px 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 auto 20px;
+            color: #fff;
+        }
+
+        .process-step h3 {
+            margin-bottom: 15px;
+            font-weight: 300;
+            color: #fff;
+        }
+
+        .process-step p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #ccc;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Social Section */
+        .social {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .social ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social img {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .social img:hover {
+            transform: scale(1.2);
+            opacity: 1;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer p {
+            margin: 0;
+            color: #888;
+        }
+
+        .footer a {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu {
+                float: none;
+                clear: both;
+                margin-top: 10px;
+            }
+
+            .menu ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .menu li {
+                margin: 5px 15px;
+            }
+
+            .navbar {
+                position: relative;
+                padding: 20px 0;
+            }
+
+            .main-content {
+                margin-top: 0;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .features,
+            .process,
+            .cta-section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- Navbar Section -->
+    <section class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="#" title="Logo">
+                    <img src="images/logo.png" alt="Restaurant Logo" class="bg-img">
+                </a>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="foods.html">Foods</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="login.html">Login</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>WOW FOOD</h1>
+                <p class="tagline">Exceptional taste, delivered</p>
+                <p class="description">Experience culinary excellence with our carefully curated selection of dishes from the finest restaurants, delivered fresh to your doorstep.</p>
+                <div class="hero-cta">
+                    <a href="categories.html" class="cta-button">EXPLORE MENU</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose Us</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <span class="feature-icon">🚀</span>
+                        <h3>Express Delivery</h3>
+                        <p>Lightning-fast delivery service ensuring your food arrives hot and fresh within 30 minutes.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">👨‍🍳</span>
+                        <h3>Premium Quality</h3>
+                        <p>We partner with top-rated restaurants and chefs to bring you exceptional culinary experiences.</p>
+                    </div>
+                    <div class="feature-item">
+                        <span class="feature-icon">📱</span>
+                        <h3>Easy Ordering</h3>
+                        <p>Intuitive interface designed for seamless ordering experience across all devices.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="process">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h3>Browse & Choose</h3>
+                        <p>Explore our extensive menu and select your favorite dishes</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h3>Place Order</h3>
+                        <p>Add items to cart and complete your order with secure payment</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h3>Fast Delivery</h3>
+                        <p>Sit back and relax while we deliver your meal fresh and hot</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h3>Enjoy!</h3>
+                        <p>Savor the delicious flavors and exceptional quality</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to Order?</h2>
+                <p>Join thousands of satisfied customers who trust us for their daily meals. Start your culinary journey today.</p>
+                <div class="hero-cta">
+                    <a href="categories.html" class="cta-button">ORDER NOW</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Media Section -->
+        <section class="social">
+            <div class="container">
+                <ul>
+                    <li>
+                        <a href="#" title="Facebook">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Instagram">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#fff" stroke-width="2"/>
+                                <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="#fff" stroke-width="2"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="#fff" stroke-width="2"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Twitter">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="YouTube">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="#fff"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Wow Food. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature items and process steps
+        document.querySelectorAll('.feature-item, .process-step').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
+        });
+
+        // Add hover effects for interactive elements
+        document.querySelectorAll('.feature-item, .process-step').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

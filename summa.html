@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Important to make website responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foods</title>
+
+    <!-- Link our CSS file -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        p{
+            font-size: 30px;
+        }
+
+        body {
+            background: #f9f9f9;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-size: 20px;
+            /* Increased base font size */
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-image: url('images/backgrounds/back3.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            filter: brightness(1.2);
+            max-width: 200px;
+            object-fit: contain;
+
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .bg-img {
+            margin-left: 0;
+            height: auto;
+        }
+
+        .logo a {
+            display: inline-block;
+            line-height: 0;
+        }
+
+
+        .menu ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 40px;
+        }
+
+        .menu li {
+            margin: 0;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.3rem;
+            /* Increased font size */
+            font-weight: 600;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Text-only hover effect */
+        .menu a:hover {
+            color: #e74c3c;
+            text-shadow: 0 0 8px rgba(231, 76, 60, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Optional: Add a subtle underline effect */
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #e74c3c;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .menu a:hover::after {
+            width: 80%;
+        }
+
+        .clearfix {
+            clear: both;
+        }
+
+        /* Animated Background - Light version */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(40, 167, 69, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            /* Increased to accommodate navbar */
+            padding: 0;
+        }
+
+        /* Social Section */
+        .social {
+            background: #fff;
+            padding: 50px 0;
+            /* Increased padding */
+            text-align: center;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .social ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            /* Increased gap */
+        }
+
+        .social a svg {
+            width: 50px;
+            /* Increased size */
+            height: 50px;
+            /* Increased size */
+            transition: transform 0.3s ease;
+        }
+
+        .social a svg path {
+            stroke: #555;
+            transition: stroke 0.3s ease;
+        }
+
+        .social a:hover svg {
+            transform: scale(1.2);
+        }
+
+        .social a:hover svg path {
+            stroke: #e74c3c;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 30px 0;
+            font-size: 1.1rem;
+            /* Increased font size */
+        }
+
+        .footer a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo img {
+                height: 50px;
+            }
+
+            body {
+                font-size: 18px;
+            }
+
+            .navbar .container {
+                flex-direction: row;
+                gap: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 10px;
+            }
+
+            .menu ul {
+                gap: 15px;
+            }
+
+            .menu a {
+                font-size: 1rem;
+                padding: 8px 12px;
+            }
+
+            .menu {
+                margin-left: 0;
+            }
+
+            .navbar {
+                position: relative;
+                padding: 20px 0;
+            }
+
+            .main-content {
+                margin-top: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 40px;
+            }
+
+            .menu ul {
+                gap: 8px;
+            }
+
+            .menu a {
+                font-size: 0.9rem;
+                padding: 6px 8px;
+            }
+
+            .navbar .container {
+                justify-content: space-between;
+                padding: 0 5px;
+            }
+        }
+
+        /* Food Menu Styles from second code */
+        .food-menu {
+            background-color: #ececec;
+            padding: 4% 0;
+        }
+
+        .food-menu .container{
+            
+        }
+        .food-menu-box {
+            width: 43%;
+            margin: 1%;
+            padding: 2%;
+            float: left;
+            background-color: white;
+            border-radius: 15px;
+        }
+
+        .food-menu-img {
+            width: 20%;
+            float: left;
+        }
+
+        .food-menu-desc {
+            width: 70%;
+            float: left;
+            margin-left: 8%;
+        }
+
+        .food-price {
+            font-size: 1.2rem;
+            margin: 2% 0;
+        }
+
+        .food-detail {
+            font-size: 1rem;
+            color: #747d8c;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 20px;
+        }
+
+        .discounted-price {
+            color: #ff6b6b;
+            font-size: 20px;
+        }
+
+        .discount-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        .food-detail {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .quantity-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #ff5252;
+            transform: scale(1.1);
+        }
+
+        .quantity-display {
+            margin: 0 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* CSS for food_imgs */
+        .img{
+            height:150px;
+            width:125px;
+            border-radius:25px;
+        }
+
+        /* Cart Button */
+        .cart-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .cart-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+        }
+
+        .cart-count {
+            background: white;
+            color: #ff6b6b;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+        }
+
+        .order-summary {
+            margin-top: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-totals {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .total-row.final {
+            border-top: 2px solid #ff6b6b;
+            padding-top: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive design for food menu */
+        @media (max-width: 768px) {
+            .food-menu-box {
+                width: 90%;
+                padding: 5%;
+                margin-bottom: 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="animated-bg"></div>
+
+    <!-- Navbar Section Starts Here -->
+    <section class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="#" title="Logo">
+                    <img src="images/logo.png" alt="Restaurant Logo" class="bg-img">
+                </a>
+            </div>
+
+            <div class="menu text-right">
+                <ul>
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="categories.html">Categories</a>
+                    </li>
+                    <li>
+                        <a href="foods.html">Foods</a>
+                    </li>
+                    <li>
+                        <a href="about- us.html">About_Us</a>
+                    </li>
+                    <li>
+                        <a href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    <!-- Navbar Section Ends Here -->
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Food Menu Section -->
+        <section class="food-menu">
+            <div class="container">
+                <h2 class="text-center">Food Menu</h2>
+                <div class="food-menu-box">
+                    <div class="food-menu-img">
+                        <img class="img" src="images/cat-pizza/margherita-pizza.jpg" alt="Margherita Pizza"
+                            class="img-responsive img-curve">
+                    </div>
+
+                    <div class="food-menu-desc">
+                        <h3>Margherita Pizza</h3>
+                        <p class="food-price">
+                            <span class="original-price">&#8377;15.99</span>
+                            <span class="discounted-price">&#8377;12.99</span>
+                            <span class="discount-badge">20% OFF</span>
+                        </p>
+                        <p class="food-detail">
+                            Made with Italian Sauce, Fresh Mozzarella, and Organic Basil.
+                        </p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(1, -1)">-</button>
+                            <span class="quantity-display" id="qty-1">0</span>
+                            <button class="quantity-btn" onclick="changeQuantity(1, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-menu-box">
+                    <div class="food-menu-img">
+                        <img class="img" src="images\cat-burger\bbq-burger.jpg" alt="BBQ Burger"
+                            class="img-responsive img-curve">
+                    </div>
+
+                    <div class="food-menu-desc">
+                        <h3>Smoky BBQ Burger</h3>
+                        <p class="food-price">
+                            <span class="original-price">&#8377;12.99</span>
+                            <span class="discounted-price">&#8377;9.99</span>
+                            <span class="discount-badge">25% OFF</span>
+                        </p>
+                        <p class="food-detail">Grilled beef patty with BBQ sauce, lettuce, tomato, and onions.</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(2, -1)">-</button>
+                            <span class="quantity-display" id="qty-2">0</span>
+                            <button class="quantity-btn" onclick="changeQuantity(2, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-menu-box">
+                    <div class="food-menu-img">
+                        <img class="img" src="images/cat-momos/tandoori-momo.jpg" alt="Tandoori Momo"
+                            class="img-responsive img-curve">
+                    </div>
+
+                    <div class="food-menu-desc">
+                        <h3>Tandoori Momo</h3>
+                        <p class="food-price">
+                            <span class="original-price">&#8377;8.99</span>
+                            <span class="discounted-price">&#8377;6.99</span>
+                            <span class="discount-badge">30% OFF</span>
+                        </p>
+                        <p class="food-detail">Traditional steamed dumplings filled with seasoned chicken.</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(3, -1)">-</button>
+                            <span class="quantity-display" id="qty-3">0</span>
+                            <button class="quantity-btn" onclick="changeQuantity(3, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="food-menu-box">
+                    <div class="food-menu-img">
+                        <img class="img" src="images/cat-soups/manchow-soup.jpg" alt="manchow-soup"
+                            class="img-responsive img-curve">
+                    </div>
+
+                    <div class="food-menu-desc">
+                        <h3>Manchow-soup</h3>
+                        <p class="food-price">
+                            <span class="original-price">&#8377;60</span>
+                            <span class="discounted-price">&#8377;45</span>
+                            <span class="discount-badge">25% OFF</span>
+                        </p>
+                        <p class="food-detail">Hot & spicy soup with veggies,garlic,soy sauce and crispy fried noodles.</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(4, -1)">-</button>
+                            <span class="quantity-display" id="qty-4">0</span>
+                            <button class="quantity-btn" onclick="changeQuantity(4, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-menu-box">
+                    <div class="food-menu-img">
+                        <img class="img" src="images/cat-salads/caesar-salad.jpg" alt="Caesar salad"
+                            class="img-responsive img-curve">
+                    </div>
+
+                    <div class="food-menu-desc">
+                        <h3>Caesar Salad</h3>
+                        <p class="food-price">
+                            <span class="original-price">&#8377;9.99</span>
+                            <span class="discounted-price">&#8377;7.99</span>
+                            <span class="discount-badge">20% OFF</span>
+                        </p>
+                        <p class="food-detail">Fresh romaine lettuce with caesar dressing and parmesan.</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(5, -1)">-</button>
+                            <span class="quantity-display" id="qty-5">0</span>
+                            <button class="quantity-btn" onclick="changeQuantity(5, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-menu-box">
+                    <div class="food-menu-img">
+                        <img class="img" src="images/cat-icecreams/icecream-sundae.jpg" alt="Icecream-Sundae"
+                            class="img-responsive img-curve">
+                    </div>
+
+                    <div class="food-menu-desc">
+                        <h3>Icecream Sundae</h3>
+                        <p class="food-price">
+                            <span class="original-price">&#8377;129</span>
+                            <span class="discounted-price">&#8377;99</span>
+                            <span class="discount-badge">23% OFF</span>
+                        </p>
+                        <p class="food-detail">Delicious scoops of various icecream flavors topped
+                            with nuts,syrups & cherry.</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(6, -1)">-</button>
+                            <span class="quantity-display" id="qty-6">0</span>
+                            <button class="quantity-btn" onclick="changeQuantity(6, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-menu-box">
+                    <div class="food-menu-img">
+                        <img class="img" src="images/cat-meals/chicken-biriyani.jpg" alt="Chicken-Biriyani"
+                            class="img-responsive img-curve">
+                    </div>
+
+                    <div class="food-menu-desc">
+                        <h3>Chicken-Biriyani</h3>
+                        <p class="food-price">
+                            <span class="original-price">&#8377;159</span>
+                            <span class="discounted-price">&#8377;129</span>
+                            <span class="discount-badge">23% OFF</span>
+                        </p>
+                        <p class="food-detail">Aromatic basmati rice cooked with spices
+                            and tender meat or veggies.</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(7, -1)">-</button>
+                            <span class="quantity-display" id="qty-7">0</span>
+                            <button class="quantity-btn" onclick="changeQuantity(7, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="food-menu-box">
+                    <div class="food-menu-img">
+                        <img class="img" src="images/cat-chaats/panipuri.jpg" alt="Panipuri"
+                            class="img-responsive img-curve">
+                    </div>
+
+                    <div class="food-menu-desc">
+                        <h3>Panipuri</h3>
+                        <p class="food-price">
+                            <span class="original-price">&#8377;50</span>
+                            <span class="discounted-price">&#8377;40</span>
+                            <span class="discount-badge">20% OFF</span>
+                        </p>
+                        <p class="food-detail">Crispy puris filled with tangy water,
+                            mashed potato, and chutney.</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="changeQuantity(8, -1)">-</button>
+                            <span class="quantity-display" id="qty-8">0</span>
+                            <button class="quantity-btn" onclick="changeQuantity(8, 1)">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+        </section>
+
+        <!-- Cart Button -->
+        <button class="cart-button" id="cartBtn" onclick="openCart()" style="display: none;">
+            Place Order
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+
+        <!-- Order Summary Modal -->
+        <div id="orderModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeCart()">&times;</span>
+                <h2>Order Summary</h2>
+                <div class="order-summary" id="orderSummary">
+                    <!-- Order items will be populated here -->
+                </div>
+                <div class="order-totals" id="orderTotals">
+                    <!-- Totals will be calculated here -->
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="confirmOrder()">Confirm Order</button>
+                    <button class="btn btn-secondary" onclick="closeCart()">Continue Shopping</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media Section -->
+        <section class="social">
+            <div class="container">
+                <ul>
+                    <li>
+                        <a href="#" title="Facebook">
+                            <svg width="50" height="50" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                                    stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Instagram">
+                            <svg width="50" height="50" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#555" stroke-width="2" />
+                                <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="#555"
+                                    stroke-width="2" />
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="#555" stroke-width="2" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="Twitter">
+                            <svg width="50" height="50" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"
+                                    stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" title="YouTube">
+                            <svg width="50" height="50" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"
+                                    stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                <polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="#555" />
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- footer Section Starts Here -->
+    <section class="footer">
+        <div class="container text-center">
+            <p>All rights reserved. Designed By <a href="#">Sabitha.M</a></p>
+        </div>
+    </section>
+    <!-- footer Section Ends Here -->
+
+    <script>
+        // Food items data
+        const foodItems = {
+            1: { name: "Margherita Pizza", originalPrice: 159, discountedPrice: 129, discount: 19, category: "pizzas", taxRate: 0.08 },
+            2: { name: "Smoky BBQ Burger", originalPrice: 129, discountedPrice: 99, discount: 23, category: "burgers", taxRate: 0.10 },
+            3: { name: "Tandoori Momo", originalPrice: 89, discountedPrice: 69, discount: 22, category: "momos", taxRate: 0.07 },
+            4: { name: "Manchow-soup", originalPrice: 60, discountedPrice: 45, discount: 25, category: "soups", taxRate: 0.10 },
+            5: { name: "Caesar Salad", originalPrice: 99, discountedPrice: 79, discount: 20, category: "salads", taxRate: 0.06 },
+            6: { name: "Icecream Sundae", originalPrice: 129, discountedPrice: 99, discount: 23, category: "ice-creams", taxRate: 0.05 },
+            7: { name: "Chicken-Biriyani", originalPrice: 159, discountedPrice: 129, discount: 19, category: "meals", taxRate: 0.08 },
+            8: { name: "Panipuri", originalPrice: 50, discountedPrice: 40, discount: 20, category: "chaats", taxRate: 0.07 }
+        };
+
+        let cart = {};
+        let totalItems = 0;
+
+        function changeQuantity(itemId, change) {
+            const qtyElement = document.getElementById(`qty-${itemId}`);
+            let currentQty = parseInt(qtyElement.textContent) || 0;
+
+            currentQty += change;
+            if (currentQty < 0) currentQty = 0;
+
+            qtyElement.textContent = currentQty;
+
+            // Update cart
+            if (currentQty === 0) {
+                delete cart[itemId];
+            } else {
+                cart[itemId] = currentQty;
+            }
+
+            updateCartButton();
+        }
+
+        function updateCartButton() {
+            totalItems = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+            const cartBtn = document.getElementById('cartBtn');
+            const cartCount = document.getElementById('cartCount');
+
+            if (totalItems > 0) {
+                cartBtn.style.display = 'block';
+                cartCount.textContent = totalItems;
+            } else {
+                cartBtn.style.display = 'none';
+            }
+        }
+
+        function openCart() {
+            const modal = document.getElementById('orderModal');
+            const orderSummary = document.getElementById('orderSummary');
+            const orderTotals = document.getElementById('orderTotals');
+
+            orderSummary.innerHTML = '';
+            orderTotals.innerHTML = '';
+
+            let subtotal = 0;
+            let totalDiscount = 0;
+            let totalTax = 0;
+
+            Object.keys(cart).forEach(itemId => {
+                const item = foodItems[itemId];
+                const quantity = cart[itemId];
+                const itemTotal = item.discountedPrice * quantity;
+                const itemDiscount = (item.originalPrice - item.discountedPrice) * quantity;
+                const itemTax = itemTotal * item.taxRate;
+
+                subtotal += itemTotal;
+                totalDiscount += itemDiscount;
+                totalTax += itemTax;
+
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                orderItem.innerHTML = `
+                    <div>
+                        <strong>${item.name}</strong><br>
+                        <small>₹${item.discountedPrice.toFixed(2)} x ${quantity} | Tax: ${Math.round(item.taxRate * 100)}%</small>
+                    </div>
+                    <div>₹${itemTotal.toFixed(2)}</div>
+                `;
+                orderSummary.appendChild(orderItem);
+            });
+
+            // Delivery charge slabs
+            let deliveryCharge = 0;
+            if (subtotal >= 500) {
+                deliveryCharge = 0;
+            } else if (subtotal >= 250) {
+                deliveryCharge = 29;
+            } else {
+                deliveryCharge = 59;
+            }
+
+            const total = subtotal + totalTax + deliveryCharge;
+
+            orderTotals.innerHTML = `
+                <div class="total-row"><span>Subtotal:</span><span>₹${subtotal.toFixed(2)}</span></div>
+                <div class="total-row"><span>Discount Saved:</span><span style="color: #52c41a;">-₹${totalDiscount.toFixed(2)}</span></div>
+                <div class="total-row"><span>Total Tax:</span><span>₹${totalTax.toFixed(2)}</span></div>
+                <div class="total-row"><span>Delivery Charge:</span><span>${deliveryCharge === 0 ? 'FREE' : '₹' + deliveryCharge.toFixed(2)}</span></div>
+                <div class="total-row final"><span>Total:</span><span>₹${total.toFixed(2)}</span></div>
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        function closeCart() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function confirmOrder() {
+            alert('Order confirmed! Your delicious food will be delivered soon. Thank you for choosing us!');
+
+            cart = {};
+            totalItems = 0;
+
+            Object.keys(foodItems).forEach(itemId => {
+                const qtyElement = document.getElementById(`qty-${itemId}`);
+                if (qtyElement) qtyElement.textContent = '0';
+            });
+
+            updateCartButton();
+            closeCart();
+        }
+
+        // Close modal on outside click
+        window.onclick = function (event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target === modal) {
+                closeCart();
+            }
+        };
+
+        // Smooth scrolling
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

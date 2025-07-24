@@ -1,0 +1,300 @@
+
+       
+       
+       
+       
+       
+       
+       
+       
+       
+       /* Navbar Styles */
+        .navbar {
+            background-image: url('../images/backgrounds/back3.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            filter: brightness(1.2);
+            max-width: 200px;
+            object-fit: contain;
+
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .bg-img {
+            margin-left: 0;
+            height: auto;
+        }
+
+        .logo a {
+            display: inline-block;
+            line-height: 0;
+        }
+
+
+        .menu ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 40px;
+        }
+
+        .menu li {
+            margin: 0;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.3rem;
+            /* Increased font size */
+            font-weight: 600;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Text-only hover effect */
+        .menu a:hover {
+            color: #e74c3c;
+            text-shadow: 0 0 8px rgba(231, 76, 60, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Optional: Add a subtle underline effect */
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #e74c3c;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .menu a:hover::after {
+            width: 80%;
+        }
+
+        .clearfix {
+            clear: both;
+        }
+
+
+                /* Animated Background - Light version */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(40, 167, 69, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+ /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: #fff;
+            text-align: center;
+            padding: 30px 0;
+            font-size: 1.1rem;
+            /* Increased font size */
+        }
+
+        .footer a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-logo {
+                height: 100px;
+                margin-bottom: 20px;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            body {
+                font-size: 18px;
+            }
+
+            .navbar .container {
+                flex-direction: row;
+                gap: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 10px;
+            }
+
+            .menu ul {
+                gap: 15px;
+            }
+
+            .menu a {
+                font-size: 1rem;
+                padding: 8px 12px;
+            }
+
+            .menu {
+                margin-left: 0;
+            }
+
+            .navbar {
+                position: relative;
+                padding: 20px 0;
+            }
+
+            .main-content {
+                margin-top: 0;
+            }
+
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 3rem;
+                margin-bottom: 60px;
+            }
+
+            .cta-section h2 {
+                font-size: 3rem;
+            }
+
+            .features,
+            .process,
+            .cta-section {
+                padding: 80px 0;
+            }
+
+            .features-grid,
+            .process-steps {
+                gap: 30px;
+            }
+
+            .feature-item,
+            .process-step {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .logo img {
+                height: 40px;
+            }
+
+            .hero-logo {
+                height: 80px;
+                margin-bottom: 15px;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.5rem;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2.5rem;
+            }
+
+            .social ul {
+                gap: 25px;
+            }
+
+            .menu ul {
+                gap: 8px;
+            }
+
+            .menu a {
+                font-size: 0.9rem;
+                padding: 6px 8px;
+            }
+
+            .navbar .container {
+                justify-content: space-between;
+                padding: 0 5px;
+            }
+        }

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wow Food - Login</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #0a0a0a;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 193, 7, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(40, 167, 69, 0.1) 0%, transparent 50%);
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 15px 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            float: left;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .menu {
+            float: right;
+        }
+
+        .menu ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu li {
+            margin-left: 30px;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .menu a:hover {
+            color: #ff6b6b;
+        }
+
+        .menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b6b;
+            transition: width 0.3s ease;
+        }
+
+        .menu a:hover::after {
+            width: 100%;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Login Form Container */
+        .login-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-title {
+            font-size: 45px;
+            margin-bottom: 10px;
+            font-weight: 300;
+            color: #ff6b6b;
+            letter-spacing: 1px;
+        }
+
+        .login-subtitle {
+            font-size: 25px;
+            color: #ccc;
+            margin-bottom: 40px;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #fff;
+            font-size:28px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 25px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #888;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+            margin: 8px;
+        }
+
+        .btn-primary {
+            background: #ff6b6b;
+            color: #fff;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+            width: calc(50% - 10px);
+            font-size:23px;
+
+        }
+
+        .btn-secondary:hover {
+            background: #ff6b6b;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Button Container */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .single-button {
+            width: 100%;
+            font-size:26px;
+
+        }
+
+        /* Divider */
+        .divider {
+            margin: 30px 0;
+            text-align: center;
+            position: relative;
+
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            background: rgba(10, 10, 10, 0.9);
+            padding: 0 15px;
+            color: #888;
+            font-size: 1.5rem;
+        }
+
+        /* Message Styles */
+        .error-message {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #ff6b6b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .success-message {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            color: #4caf50;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff6b6b;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Radio Button Styles */
+        input[type="radio"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ff6b6b;
+            border-radius: 50%;
+            margin-right: 8px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked::before {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu {
+                float: none;
+                clear: both;
+                margin-top: 10px;
+            }
+
+            .menu ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .menu li {
+                margin: 5px 15px;
+            }
+
+            .navbar {
+                position: relative;
+                padding: 20px 0;
+            }
+
+            .main-content {
+                margin-top: 0;
+                padding: 20px;
+            }
+
+            .login-container {
+                padding: 30px 20px;
+            }
+
+            .login-title {
+                font-size: 2rem;
+            }
+
+            .btn-secondary {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- Navbar Section -->
+    <section class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html" title="Logo">
+                    <img src="images/logo.png" alt="Restaurant Logo" class="bg-img">
+                </a>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="foods.html">Foods</a></li>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="login.html" class="active">Login</a></li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="login-container">
+            <h1 class="login-title">Welcome Back</h1>
+            <p class="login-subtitle">Login to continue your culinary journey</p>
+            
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+            <div class="loading" id="loading"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="customerId">Customer ID</label>
+                    <input type="text" id="customerId" name="customerId" class="form-input" 
+                           placeholder="Enter your Customer ID" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary single-button">
+                    LOGIN
+                </button>
+            </form>
+            
+            <div class="divider">
+                <span >Need help?</span>
+            </div>
+            
+            <div class="button-group">
+                <button type="button" class="btn btn-secondary" onclick="forgotUserId()">
+                    Forgot User ID
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="registerUser()">
+                    Register
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login form submission - Ready for PHP integration
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const customerId = document.getElementById('customerId').value.trim();
+            
+            if (!customerId) {
+                showError('Please enter your Customer ID');
+                return;
+            }
+            
+            showLoading(true);
+            
+            // PHP AJAX call for login
+            fetch('auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=login&customerId=${encodeURIComponent(customerId)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                showLoading(false);
+                
+                if (data.success) {
+                    showSuccess('Login successful! Redirecting to categories...');
+                    setTimeout(() => {
+                        window.location.href = 'categories.html';
+                    }, 1500);
+                } else {
+                    showError(data.message || 'Invalid Customer ID. Please check and try again.');
+                }
+            })
+            .catch(error => {
+                showLoading(false);
+                showError('Connection error. Please try again.');
+            });
+        });
+
+        // Forgot User ID modal
+        function forgotUserId() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: rgba(255, 255, 255, 0.05);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 20px;
+                    padding: 40px;
+                    max-width: 400px;
+                    width: 90%;
+                    text-align: center;
+                    color: white;
+                ">
+                    <h2 style="color: #ff6b6b; margin-bottom: 20px; font-weight: 300; font-size: 36px;">Forgot User ID</h2>
+                    <p style="margin-bottom: 30px; color: #ccc; font-size: 28px;">Enter your phone number to retrieve your Customer ID</p>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;  font-size: 26px;">Phone Number</label>
+                        <input type="tel" id="phoneNumber" style="
+                            width: 100%;
+                            padding: 15px 20px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 10px;
+                            color: #fff;
+                            font-size: 24px;
+                        " placeholder="Enter your ph no" maxlength="10">
+                    </div>
+                    
+                    <div id="forgotResult" style="margin-bottom: 20px;"></div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="retrieveUserId()" style="
+                            flex: 1;
+                            padding: 12px 20px;
+                            background: #ff6b6b;
+                            color: white;
+                            border: none;
+                            border-radius: 10px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size: 28px;
+                        ">Retrieve ID</button>
+                        <button onclick="closeModal()" style="
+                            flex: 1;
+                            padding: 12px 20px;
+                            background: transparent;
+                            color: #ff6b6b;
+                            border: 2px solid #ff6b6b;
+                            border-radius: 10px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size: 28px;
+                        ">Close</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        // Retrieve User ID - Ready for PHP integration
+        function retrieveUserId() {
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const resultDiv = document.getElementById('forgotResult');
+            
+            if (!phoneNumber) {
+                resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Please enter your phone number</p>';
+                return;
+            }
+            
+            if (phoneNumber.length !== 10) {
+                resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Please enter a valid 10-digit phone number</p>';
+                return;
+            }
+            
+            // PHP AJAX call for forgot user ID
+            fetch('auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=forgot_id&phone=${encodeURIComponent(phoneNumber)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div style="
+                            background: rgba(0, 255, 0, 0.1);
+                            border: 1px solid rgba(0, 255, 0, 0.3);
+                            color: #4caf50;
+                            padding: 15px;
+                            border-radius: 10px;
+                            font-size: 0.9rem;
+                        ">
+                            <strong>Your Customer ID: ${data.customerId}</strong><br>
+                            <small>Please save this ID for future logins</small>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Phone number not found. Please register first.</p>';
+                }
+            })
+            .catch(error => {
+                resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Connection error. Please try again.</p>';
+            });
+        }
+
+        // Register modal - Ready for PHP integration
+        function registerUser() {
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2000;
+            `;
+            
+            modal.innerHTML = `
+                <div style="
+                    background: rgba(255, 255, 255, 0.05);
+                    backdrop-filter: blur(20px);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                    border-radius: 20px;
+                    padding: 40px;
+                    max-width: 500px;
+                    width: 90%;
+                    text-align: center;
+                    color: white;
+                ">
+                    <h2 style="color: #ff6b6b; margin-bottom: 20px; font-weight: 300;  font-size:36px; ">Register New User</h2>
+                    <p style="margin-bottom: 30px; color: #ccc; font-size:34px;  ">Create your account to start ordering</p>
+                    
+                    <div style="margin-bottom: 20px; text-align: left;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; font-size:32px;">Full Name</label>
+                        <input type="text" id="regName" style="
+                            width: 100%;
+                            padding: 15px 20px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 10px;
+                            color: #fff;
+                            font-size: 30px;
+                        " placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; text-align: left;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; font-size:32px;">Email</label>
+                        <input type="email" id="regEmail" style="
+                            width: 100%;
+                            padding: 15px 20px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 10px;
+                            color: #fff;
+                            font-size: 30px;
+                        " placeholder="Enter your email address" required>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; text-align: left;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; font-size:32px;">Phone Number</label>
+                        <input type="tel" id="regPhone" style="
+                            width: 100%;
+                            padding: 15px 20px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 10px;
+                            color: #fff;
+                            font-size:30px;
+                        " placeholder="Enter your phone number" maxlength="10" required>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; text-align: left;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500; font-size:32px;">Address</label>
+                        <textarea id="regAddress" style="
+                            width: 100%;
+                            padding: 15px 20px;
+                            background: rgba(255, 255, 255, 0.05);
+                            border: 1px solid rgba(255, 255, 255, 0.1);
+                            border-radius: 10px;
+                            color: #fff;
+                            font-size: 30px;
+                            min-height: 80px;
+                            resize: vertical;
+                        " placeholder="Enter your full address" required></textarea>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px; text-align: left;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 500;  font-size:32px;">Gender</label>
+                        <div style="display: flex; gap: 20px;  font-size:30px; flex-wrap: wrap;">
+                            <label style="display: flex; align-items: center; cursor: pointer;">
+                                <input type="radio" name="gender" value="male" checked style="margin-right: 8px;  transform:scale(1.5);  margin:10px;">
+                                Male
+                            </label>
+                            <label style="display: flex; align-items: center; cursor: pointer; font-size:32px; ">
+                                <input type="radio" name="gender" value="female" style="margin-right: 8px; transform:scale(1.5);  margin:10px;">
+                                Female
+                            </label>
+                            <label style="display: flex; align-items: center; cursor: pointer; font-size:32px;">
+                                <input type="radio" name="gender" value="other" style="margin-right: 8px; transform:scale(1.5);  margin:10px;">
+                                Other
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div id="registerResult" style="margin-bottom: 20px;"></div>
+                    
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="createAccount()" style="
+                            flex: 1;
+                            padding: 12px 20px;
+                            background: #ff6b6b;
+                            color: white;
+                            border: none;
+                            border-radius: 10px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size:30px;
+                        ">Register</button>
+                        <button onclick="closeModal()" style="
+                            flex: 1;
+                            padding: 12px 20px;
+                            background: transparent;
+                            color: #ff6b6b;
+                            border: 2px solid #ff6b6b;
+                            border-radius: 10px;
+                            cursor: pointer;
+                            font-weight: 600;
+                            font-size:30px;
+                        ">Cancel</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        // Create account - Ready for PHP integration
+        function createAccount() {
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const address = document.getElementById('regAddress').value.trim();
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const resultDiv = document.getElementById('registerResult');
+            
+            // Validation
+            if (!name || !email || !phone || !address) {
+                resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Please fill in all required fields</p>';
+                return;
+            }
+            
+            if (phone.length !== 10) {
+                resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Please enter a valid 10-digit phone number</p>';
+                return;
+            }
+            
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Please enter a valid email address</p>';
+                return;
+            }
+            
+            // PHP AJAX call for registration with additional fields
+            fetch('auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=register&name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&address=${encodeURIComponent(address)}&gender=${encodeURIComponent(gender)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div style="
+                            background: rgba(0, 255, 0, 0.1);
+                            border: 1px solid rgba(0, 255, 0, 0.3);
+                            color: #4caf50;
+                            padding: 15px;
+                            border-radius: 10px;
+                            font-size: 0.9rem;
+                        ">
+                            <strong>Registration Successful!</strong><br>
+                            <strong>Your Customer ID: ${data.customerId}</strong><br>
+                            <small>Please save this ID for future logins</small>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: #ff6b6b; font-size: 0.9rem;">${data.message}</p>`;
+                }
+            })
+            .catch(error => {
+                resultDiv.innerHTML = '<p style="color: #ff6b6b; font-size: 0.9rem;">Connection error. Please try again.</p>';
+            });
+        }
+
+        // Close modal
+        function closeModal() {
+            const modal = document.querySelector('div[style*="position: fixed"]');
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        // Utility functions
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        // Close modal on outside click
+        document.addEventListener('click', function(e) {
+            if (e.target.style.position === 'fixed') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!-- FRONTPAGE-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta cha&#8377;et="UTF-8">
+    <!-- Important to make website responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Website</title>
+
+    <!-- Link our CSS file -->
+    <link rel="stylesheet" href="css/style.css">
+  <script src="js/index.js"></script>
+
+</head>
+
+<body>
+    <!-- Navbar Section Starts Here -->
+    <section class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="#" title="Logo">
+                    <img src="images/logo.png" alt="Restaurant Logo" class="bg-img">
+                </a>
+            </div>
+
+            <div class="menu text-right">
+                <ul>
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="categories.html">Categories</a>
+                    </li>
+                    <li>
+                        <a href="foods.html">Foods</a>
+                    </li>
+                    <li>
+                        <a href="about- us.html">About Us</a>
+                    </li>
+                    <li>
+                        <a href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    <!-- Navbar Section Ends Here -->
+
+    <!-- fOOD sEARCH Section Starts Here -->
+    <section class="food-search text-center">
+        <div class="container">
+
+            <form action="food-search.html" method="POST">
+                <input type="search" name="search" placeholder="Search for Food.." required>
+                <input type="submit" name="submit" value="Search" class="btn btn-primary">
+            </form>
+
+        </div>
+    </section>
+    <!-- fOOD sEARCH Section Ends Here -->
+
+    <!-- CAtegories Section Starts Here -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="text-center">Explore Foods</h2>
+
+            <a href="category-foods.html">
+                <div class="box-3 float-container">
+                    <img src="images/categories/menu-pizza.jpg" alt="Pizza" class="img-responsive img-curve">
+
+                    <h3 class="float-text text-white">Pizza</h3>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="box-3 float-container">
+                    <img src="images/categories/menu-burger.jpg" alt="Burger" class="img-responsive img-curve">
+
+                    <h3 class="float-text text-white">Burger</h3>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="box-3 float-container">
+                    <img src="images/categories/menu-momo.jpg" alt="Momo" class="img-responsive img-curve">
+
+                    <h3 class="float-text text-white">Momo</h3>
+                </div>
+            </a>
+
+            <div class="view-all-container">
+                <a href="categories.html" class="view-all">View All Categories →</a>
+            </div>
+            <div class="clearfix"></div>
+
+        </div>
+    </section>
+    <!-- Categories Section Ends Here -->
+
+    <!-- fOOD MEnu Section Starts Here -->
+    <section class="food-menu">
+        <div class="container">
+            <h2 class="text-center">Food Menu</h2>
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img class="img" src="images/cat-pizza/margherita-pizza.jpg" alt="Margherita Pizza"
+                        class="img-responsive img-curve">
+                </div>
+
+                <div class="food-menu-desc">
+                    <h3>Margherita Pizza</h3>
+                    <p class="food-price">
+                        <span class="original-price">&#8377;15.99</span>
+                        <span class="discounted-price">&#8377;12.99</span>
+                        <span class="discount-badge">20% OFF</span>
+                    </p>
+                    <p class="food-detail">
+                        Made with Italian Sauce, Fresh Mozzarella, and Organic Basil.
+                    </p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(1, -1)">-</button>
+                        <span class="quantity-display" id="qty-1">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(1, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img class="img" src="images\cat-burger\bbq-burger.jpg" alt="BBQ Burger"
+                        class="img-responsive img-curve">
+                </div>
+
+                <div class="food-menu-desc">
+                    <h3>Smoky BBQ Burger</h3>
+                    <p class="food-price">
+                        <span class="original-price">&#8377;12.99</span>
+                        <span class="discounted-price">&#8377;9.99</span>
+                        <span class="discount-badge">25% OFF</span>
+                    </p>
+                    <p class="food-detail">Grilled beef patty with BBQ sauce, lettuce, tomato, and onions.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(2, -1)">-</button>
+                        <span class="quantity-display" id="qty-2">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(2, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img class="img" src="images/cat-momos/tandoori-momo.jpg" alt="Tandoori Momo"
+                        class="img-responsive img-curve">
+                </div>
+
+                <div class="food-menu-desc">
+                    <h3>Tandoori Momo</h3>
+                    <p class="food-price">
+                        <span class="original-price">&#8377;8.99</span>
+                        <span class="discounted-price">&#8377;6.99</span>
+                        <span class="discount-badge">30% OFF</span>
+                    </p>
+                    <p class="food-detail">Traditional steamed dumplings filled with seasoned chicken.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(3, -1)">-</button>
+                        <span class="quantity-display" id="qty-3">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(3, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img class="img" src="images/cat-soups/manchow-soup.jpg" alt="manchow-soup" class="img-responsive img-curve">
+                </div>
+
+                <div class="food-menu-desc">
+                    <h3>Manchow-soup</h3>
+                    <p class="food-price">
+                        <span class="original-price">&#8377;60</span>
+                        <span class="discounted-price">&#8377;45</span>
+                        <span class="discount-badge">25% OFF</span>
+                    </p>
+                    <p class="food-detail">Hot & spicy soup with veggies,garlic,soy sauce  and crispy fried noodles.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(4, -1)">-</button>
+                        <span class="quantity-display" id="qty-4">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(4, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img class="img" src="images/cat-salads/caesar-salad.jpg" alt="Caesar salad"
+                        class="img-responsive img-curve">
+                </div>
+
+                <div class="food-menu-desc">
+                    <h3>Caesar Salad</h3>
+                    <p class="food-price">
+                        <span class="original-price">&#8377;9.99</span>
+                        <span class="discounted-price">&#8377;7.99</span>
+                        <span class="discount-badge">20% OFF</span>
+                    </p>
+                    <p class="food-detail">Fresh romaine lettuce with caesar dressing and parmesan.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(5, -1)">-</button>
+                        <span class="quantity-display" id="qty-5">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(5, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img class="img" src="images/cat-icecreams/icecream-sundae.jpg" alt="Icecream-Sundae"
+                        class="img-responsive img-curve">
+                </div>
+
+                <div class="food-menu-desc">
+                    <h3>Icecream Sundae</h3>
+                    <p class="food-price">
+                        <span class="original-price">&#8377;129</span>
+                        <span class="discounted-price">&#8377;99</span>
+                        <span class="discount-badge">23% OFF</span>
+                    </p>
+                    <p class="food-detail">Delicious scoops of various icecream flavors topped
+                        with nuts,syrups & cherry.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(6, -1)">-</button>
+                        <span class="quantity-display" id="qty-6">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(6, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img class="img" src="images/cat-meals/chicken-biriyani.jpg" alt="Chicken-Biriyani"
+                        class="img-responsive img-curve">
+                </div>
+
+                <div class="food-menu-desc">
+                    <h3>Chicken-Biriyani</h3>
+                    <p class="food-price">
+                        <span class="original-price">&#8377;159</span>
+                        <span class="discounted-price">&#8377;129</span>
+                        <span class="discount-badge">23% OFF</span>
+                    </p>
+                    <p class="food-detail">Aromatic basmati rice cooked with spices
+                        and tender meat or veggies.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(7, -1)">-</button>
+                        <span class="quantity-display" id="qty-7">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(7, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img class="img" src="images/cat-chaats/panipuri.jpg" alt="Panipuri"
+                        class="img-responsive img-curve">
+                </div>
+
+                <div class="food-menu-desc">
+                    <h3>Panipuri</h3>
+                    <p class="food-price">
+                        <span class="original-price">&#8377;50</span>
+                        <span class="discounted-price">&#8377;40</span>
+                        <span class="discount-badge">20% OFF</span>
+                    </p>
+                    <p class="food-detail">Crispy puris filled with tangy water,
+                        mashed potato, and chutney.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(8, -1)">-</button>
+                        <span class="quantity-display" id="qty-8">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(8, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="view-all-container">
+                <a href="categories.html" class="view-all">View All Foods →</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    <!-- fOOD Menu Section Ends Here -->
+
+
+      <!-- Cart Button -->
+    <button class="cart-button" id="cartBtn" onclick="openCart()" style="display: none;">
+        Place Order
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <!-- Order Summary Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2>Order Summary</h2>
+            <div class="order-summary" id="orderSummary">
+                <!-- Order items will be populated here -->
+            </div>
+            <div class="order-totals" id="orderTotals">
+                <!-- Totals will be calculated here -->
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="confirmOrder()">Confirm Order</button>
+                <button class="btn btn-secondary" onclick="closeCart()">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+<!-- Payment Options Modal (Add this after the Order Summary Modal) -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePaymentModal()">&times;</span>
+        <h2>Choose Payment Method</h2>
+        <div class="payment-options">
+            <div class="payment-option" onclick="selectPaymentMethod('cod')">
+                <div class="payment-icon">💵</div>
+                <h3>Cash on Delivery</h3>
+                <p>Pay when your order arrives</p>
+            </div>
+            <div class="payment-option" onclick="selectPaymentMethod('mobile')">
+                <div class="payment-icon">📱</div>
+                <h3>Mobile Banking</h3>
+                <p>Pay online using mobile banking</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cash on Delivery Confirmation Modal -->
+<div id="codModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCodModal()">&times;</span>
+        <h2>Order Confirmed!</h2>
+        <div class="success-message">
+            <div class="success-icon">✅</div>
+            <h3>Thank you for your order!</h3>
+            <p>Your order has been successfully placed.</p>
+            <p><strong>Payment Method:</strong> Cash on Delivery</p>
+            <p><strong>Estimated Delivery:</strong> within 30 minutes</p>
+            <p>You will receive a call when the delivery is close is to your home.
+                Please keep the exact amount ready for payment.</p>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="closeAllModals()">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- social Section Starts Here -->
+    <section class="social">
+        <div class="container text-center">
+            <ul>
+                <li>
+                    <a href="#"><img src="https://img.icons8.com/fluent/50/000000/facebook-new.png" /></a>
+                </li>
+                <li>
+                    <a href="#"><img src="https://img.icons8.com/fluent/48/000000/instagram-new.png" /></a>
+                </li>
+                <li>
+                    <a href="#"><img src="https://img.icons8.com/fluent/48/000000/twitter.png" /></a>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- social Section Ends Here -->
+
+    <!-- footer Section Starts Here -->
+    <section class="footer">
+        <div class="container text-center">
+            <p>All rights reserved. Designed By <a href="#">Sabitha.M</a></p>
+        </div>
+    </section>
+    <!-- footer Section Ends Here -->
+
+</body>
+
+</html>

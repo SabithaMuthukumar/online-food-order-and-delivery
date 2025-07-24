@@ -1,0 +1,81 @@
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+
+
+    body {
+        background-image: url("../images/backgrounds/back4.png");
+        /* 🔁 Replace with your image */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .form-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        /* semi-transparent background */
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin: 10px 0 5px;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #ff6b81;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .submit-btn:hover {
+        background-color: #f89fac;
+    }
+
+    .output {
+        margin-top: 15px;
+        padding: 10px;
+        background: #eaffea;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    @media screen and (max-width: 500px) {
+        .form-container {
+            padding: 15px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+    }

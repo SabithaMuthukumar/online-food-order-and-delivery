@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Banking Payment - Restaurant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .transaction-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transaction-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b35, #ff8c42);
+        }
+
+        .payment-header {
+            margin-bottom: 30px;
+        }
+
+        .payment-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .payment-header h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .payment-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .security-note {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .security-note .icon {
+            color: #28a745;
+            margin-right: 8px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b35, #ff8c42);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .button-group {
+            margin-top: 30px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #ff6b35;
+        }
+
+        .modal-content h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounceIn 0.6s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .success-message h3 {
+            color: #28a745;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .success-message p {
+            margin: 10px 0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #666;
+            text-decoration: none;
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #ff6b35;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .transaction-container {
+                padding: 30px 20px;
+            }
+            
+            .payment-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                padding: 30px 20px;
+            }
+        }
+
+        .loading-spinner {
+            display: none;
+            margin: 0 auto 20px;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff6b35;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+     <a href="index.html" class="back-link">←</a>
+  <div class="transaction-container">
+    <div class="payment-header">
+      <div class="payment-icon">📱</div>
+      <h1>Mobile Banking</h1>
+      <p>Complete your payment securely</p>
+    </div>
+
+    <form id="paymentForm">
+      <div class="form-group">
+        <label for="transactionId">Transaction ID</label>
+        <input type="text" id="transactionId" name="transactionId"
+               placeholder="Enter your transaction ID" required>
+      </div>
+
+      <div class="form-group">
+        <label for="customerName">Full Name</label>
+        <input type="text" id="customerName" name="customerName"
+               placeholder="Enter your full name" required>
+      </div>
+
+      <div class="security-note">
+        <span class="icon">🔒</span>
+        Your payment information is encrypted and secure. We never store your banking details.
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="btn btn-primary">Confirm Payment</button>
+        <button type="button" class="btn btn-secondary" onclick="goBack()">Cancel</button>
+      </div>
+    </form>
+
+    <div class="loading-spinner" id="loadingSpinner"></div>
+  </div>
+
+  <!-- Payment Success Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeSuccessModal()">&times;</span>
+      <h2>Payment Successful!</h2>
+      <div class="success-message">
+        <div class="success-icon">✅</div>
+        <h3>Thank you for your order!</h3>
+        <p>Your order has been successfully placed.</p>
+        <p><strong>Payment Method:</strong> Mobile Banking</p>
+        <p><strong>Transaction ID:</strong> <span id="displayTransactionId"></span></p>
+        <p><strong>Customer Name:</strong> <span id="displayCustomerName"></span></p>
+        <p><strong>Estimated Delivery:</strong> 30-45 minutes</p>
+        <p>You will receive a call when the delivery is close to your home.</p>
+        <div style="text-align: center; margin-top: 20px;">
+          <button class="btn btn-primary" onclick="goToHomePage()">Continue Shopping</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script>
+           document.getElementById('paymentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const transactionId = document.getElementById('transactionId').value.trim();
+      const customerName = document.getElementById('customerName').value.trim();
+
+      const hyphenRegex = /^[a-zA-Z0-9-]+$/;
+
+      // Validate inputs
+      if (!transactionId || !customerName) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      if (!hyphenRegex.test(transactionId)) {
+        alert('Transaction ID must contain only letters, numbers, and hyphens.');
+        document.getElementById('transactionId').focus();
+        return;
+      }
+
+      // Show loading spinner
+      document.getElementById('loadingSpinner').style.display = 'block';
+
+      // Simulate payment processing
+      setTimeout(() => {
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('displayTransactionId').textContent = transactionId;
+        document.getElementById('displayCustomerName').textContent = customerName;
+        document.getElementById('successModal').style.display = 'block';
+      }, 2000);
+    });
+
+    function closeSuccessModal() {
+      document.getElementById('successModal').style.display = 'none';
+    }
+
+    function goBack() {
+      window.history.back();
+    }
+
+    function goToHomePage() {
+      window.location.href = 'index.html';
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('successModal');
+      if (event.target === modal) {
+        closeSuccessModal();
+      }
+    }
+
+    // Auto-generate transaction ID placeholder
+    window.addEventListener('load', function() {
+      const autoTransactionId = 'TXN-' + Date.now().toString().substr(-8);
+      document.getElementById('transactionId').placeholder = `e.g., ${autoTransactionId}`;
+    });
+    </script>
+</body>
+
+</html>
