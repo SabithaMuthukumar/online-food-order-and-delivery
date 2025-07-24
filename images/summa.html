@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-white {
+            color: white;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .img-responsive {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .img-curve {
+            border-radius: 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #ff5252, #ff7575);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            float: left;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        .menu {
+            float: right;
+        }
+
+        .menu ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            height: 50px;
+        }
+
+        .menu ul li {
+            margin-left: 30px;
+        }
+
+        .menu ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .menu ul li a:hover {
+            color: #ff6b6b;
+        }
+
+        /* Food Search */
+        .food-search {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 50px 0;
+        }
+
+        .food-search input[type="search"] {
+            width: 60%;
+            padding: 15px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .food-search input[type="submit"] {
+            padding: 15px 30px;
+            border-radius: 25px;
+        }
+
+        /* Categories */
+        .categories {
+            padding: 80px 0;
+        }
+
+        .categories h2 {
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: #2c3e50;
+        }
+
+        .box-3 {
+            width: 30%;
+            float: left;
+            margin: 1.5%;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .box-3:hover {
+            transform: translateY(-10px);
+        }
+
+        .float-container {
+            position: relative;
+        }
+
+        .float-text {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.7);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+        }
+
+        /* Food Menu */
+        .food-menu {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .food-menu h2 {
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: #2c3e50;
+        }
+
+        .food-menu-box {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .food-menu-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .food-menu-img {
+            width: 200px;
+            height: 150px;
+            overflow: hidden;
+        }
+
+        .food-menu-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .food-menu-desc {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .food-menu-desc h4 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .food-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        .discounted-price {
+            color: #ff6b6b;
+        }
+
+        .discount-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        .food-detail {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .quantity-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #ff5252;
+            transform: scale(1.1);
+        }
+
+        .quantity-display {
+            margin: 0 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* Cart Button */
+        .cart-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .cart-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+        }
+
+        .cart-count {
+            background: white;
+            color: #ff6b6b;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+        }
+
+        .order-summary {
+            margin-top: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-totals {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .total-row.final {
+            border-top: 2px solid #ff6b6b;
+            padding-top: 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* Social & Footer */
+        .social {
+            padding: 30px 0;
+            background: #2c3e50;
+        }
+
+        .social ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        .social ul li {
+            margin: 0 15px;
+        }
+
+        .social ul li a img {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .social ul li a img:hover {
+            transform: scale(1.2);
+        }
+
+        .footer {
+            background: #1a252f;
+            color: white;
+            padding: 20px 0;
+        }
+
+        .footer a {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .food-menu-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .food-menu-img {
+                width: 100%;
+                height: 200px;
+            }
+
+            .box-3 {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar Section -->
+    <section class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="#" title="Logo">
+                    <img src="https://via.placeholder.com/150x50/ff6b6b/white?text=LOGO" alt="Restaurant Logo" class="img-responsive">
+                </a>
+            </div>
+
+            <div class="menu text-right">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#menu">Foods</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+    <!-- Food Search Section -->
+    <section class="food-search text-center">
+        <div class="container">
+            <h1 class="text-white" style="margin-bottom: 30px; font-size: 2.5rem;">Order Your Favorite Food</h1>
+            <form>
+                <input type="search" placeholder="Search for Food..." required>
+                <input type="submit" value="Search" class="btn btn-primary">
+            </form>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <h2 class="text-center">Explore Foods</h2>
+
+            <div class="box-3 float-container">
+                <img src="https://via.placeholder.com/400x300/ff6b6b/white?text=PIZZA" alt="Pizza" class="img-responsive img-curve">
+                <h3 class="float-text text-white">Pizza</h3>
+            </div>
+
+            <div class="box-3 float-container">
+                <img src="https://via.placeholder.com/400x300/52c41a/white?text=BURGER" alt="Burger" class="img-responsive img-curve">
+                <h3 class="float-text text-white">Burger</h3>
+            </div>
+
+            <div class="box-3 float-container">
+                <img src="https://via.placeholder.com/400x300/1890ff/white?text=MOMO" alt="Momo" class="img-responsive img-curve">
+                <h3 class="float-text text-white">Momo</h3>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+    <!-- Food Menu Section -->
+    <section class="food-menu" id="menu">
+        <div class="container">
+            <h2 class="text-center">Food Menu</h2>
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img src="https://via.placeholder.com/200x150/ff6b6b/white?text=PIZZA" alt="Margherita Pizza">
+                </div>
+                <div class="food-menu-desc">
+                    <h4>Margherita Pizza</h4>
+                    <p class="food-price">
+                        <span class="original-price">$15.99</span>
+                        <span class="discounted-price">$12.99</span>
+                        <span class="discount-badge">20% OFF</span>
+                    </p>
+                    <p class="food-detail">Made with Italian Sauce, Fresh Mozzarella, and Organic Basil.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(1, -1)">-</button>
+                        <span class="quantity-display" id="qty-1">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(1, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img src="https://via.placeholder.com/200x150/52c41a/white?text=BURGER" alt="Smoky Burger">
+                </div>
+                <div class="food-menu-desc">
+                    <h4>Smoky BBQ Burger</h4>
+                    <p class="food-price">
+                        <span class="original-price">$12.99</span>
+                        <span class="discounted-price">$9.99</span>
+                        <span class="discount-badge">25% OFF</span>
+                    </p>
+                    <p class="food-detail">Grilled beef patty with BBQ sauce, lettuce, tomato, and onions.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(2, -1)">-</button>
+                        <span class="quantity-display" id="qty-2">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(2, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img src="https://via.placeholder.com/200x150/722ed1/white?text=PASTA" alt="Chicken Pasta">
+                </div>
+                <div class="food-menu-desc">
+                    <h4>Chicken Alfredo Pasta</h4>
+                    <p class="food-price">
+                        <span class="original-price">$14.99</span>
+                        <span class="discounted-price">$11.99</span>
+                        <span class="discount-badge">15% OFF</span>
+                    </p>
+                    <p class="food-detail">Creamy alfredo sauce with grilled chicken and fresh herbs.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(3, -1)">-</button>
+                        <span class="quantity-display" id="qty-3">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(3, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img src="https://via.placeholder.com/200x150/1890ff/white?text=MOMO" alt="Chicken Momo">
+                </div>
+                <div class="food-menu-desc">
+                    <h4>Chicken Steam Momo</h4>
+                    <p class="food-price">
+                        <span class="original-price">$8.99</span>
+                        <span class="discounted-price">$6.99</span>
+                        <span class="discount-badge">30% OFF</span>
+                    </p>
+                    <p class="food-detail">Traditional steamed dumplings filled with seasoned chicken.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(4, -1)">-</button>
+                        <span class="quantity-display" id="qty-4">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(4, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img src="https://via.placeholder.com/200x150/fa8c16/white?text=TACOS" alt="Beef Tacos">
+                </div>
+                <div class="food-menu-desc">
+                    <h4>Beef Tacos (3 pcs)</h4>
+                    <p class="food-price">
+                        <span class="original-price">$10.99</span>
+                        <span class="discounted-price">$8.99</span>
+                        <span class="discount-badge">18% OFF</span>
+                    </p>
+                    <p class="food-detail">Soft shell tacos with seasoned beef, lettuce, and cheese.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(5, -1)">-</button>
+                        <span class="quantity-display" id="qty-5">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(5, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="food-menu-box">
+                <div class="food-menu-img">
+                    <img src="https://via.placeholder.com/200x150/eb2f96/white?text=SALAD" alt="Caesar Salad">
+                </div>
+                <div class="food-menu-desc">
+                    <h4>Caesar Salad</h4>
+                    <p class="food-price">
+                        <span class="original-price">$9.99</span>
+                        <span class="discounted-price">$7.99</span>
+                        <span class="discount-badge">20% OFF</span>
+                    </p>
+                    <p class="food-detail">Fresh romaine lettuce with caesar dressing and parmesan.</p>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" onclick="changeQuantity(6, -1)">-</button>
+                        <span class="quantity-display" id="qty-6">0</span>
+                        <button class="quantity-btn" onclick="changeQuantity(6, 1)">+</button>
+                    </div>
+                </div>
+            </div>
+             <div class="food-menu-box">
+  <div class="food-menu-img">
+    <img src="../images/biriyani.jpg" alt="Biryani" class="img">
+  </div>
+  <div class="food-menu-desc">
+    <h3>Biryani</h3>
+    <p class="food-price"><span class="original-price">&#8377;180</span> <span class="discounted-price">&#8377;150</span> <span class="discount-badge">17% OFF</span></p>
+    <p class="food-detail">Fragrant rice with spiced vegetables or meat.</p>
+    <div class="quantity-controls">
+      <button class="quantity-btn" onclick="changeQuantity(1, -1)">- </button>
+      <span id="qty-1">0</span>
+      <button class="quantity-btn" onclick="changeQuantity(1, 1)">+ </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="food-menu-box">
+  <div class="food-menu-img">
+    <img src="../images/paneer-butter-masala.jpg" alt="Paneer Butter Masala" class="img">
+  </div>
+  <div class="food-menu-desc">
+    <h3>Paneer Butter Masala</h3>
+    <p class="food-price"><span class="original-price">&#8377;160</span> <span class="discounted-price">&#8377;130</span> <span class="discount-badge">19% OFF</span></p>
+    <p class="food-detail">Soft paneer cubes in a rich tomato gravy.</p>
+    <div class="quantity-controls">
+      <button  class="quantity-btn" onclick="changeQuantity(2, -1)">-</button>
+      <span id="qty-2">0</span>
+      <button  class="quantity-btn" onclick="changeQuantity(2, 1)">+</button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="food-menu-box">
+  <div class="food-menu-img">
+    <img src="../images/dosa.jpg" alt="Dosa" class="img">
+  </div>
+  <div class="food-menu-desc">
+    <h3>Dosa</h3>
+    <p class="food-price"><span class="original-price">&#8377;60</span> <span class="discounted-price">&#8377;50</span> <span class="discount-badge">17% OFF</span></p>
+    <p class="food-detail">Crispy South Indian rice crepe served with chutney & sambar.</p>
+    <div class="quantity-controls">
+      <button class="quantity-btn" onclick="changeQuantity(3, -1)">-</button>
+      <span id="qty-3">0</span>
+      <button class="quantity-btn" onclick="changeQuantity(3, 1)">+</button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="food-menu-box">
+  <div class="food-menu-img">
+    <img src="../images/pizza.jpg" alt="Pizza" class="img">
+  </div>
+  <div class="food-menu-desc">
+    <h3>Pizza</h3>
+    <p class="food-price"><span class="original-price">&#8377;250</span> <span class="discounted-price">&#8377;210</span> <span class="discount-badge">16% OFF</span></p>
+    <p class="food-detail">Cheesy pizza with your favorite toppings.</p>
+    <div class="quantity-controls">
+      <button  class="quantity-btn" onclick="changeQuantity(4, -1)">-</button>
+      <span id="qty-4">0</span>
+      <button class="quantity-btn" onclick="changeQuantity(4, 1)">+</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="food-menu-box">
+  <div class="food-menu-img">
+    <img src="../images/classic-burger.jpg" alt="Burger" class="img">
+  </div>
+  <div class="food-menu-desc">
+    <h3>Burger</h3>
+    <p class="food-price"><span class="original-price">&#8377;120</span> <span class="discounted-price">&#8377;99</span> <span class="discount-badge">18% OFF</span></p>
+    <p class="food-detail">Juicy burger with crispy patty and veggies.</p>
+    <div class="quantity-controls">
+      <button  class="quantity-btn" onclick="changeQuantity(5, -1)">-</button>
+      <span id="qty-5">0</span>
+      <button class="quantity-btn" onclick="changeQuantity(5, 1)">+</button>
+    </div>
+  </div>
+</div>
+
+
+
+            <div class="clearfix"></div>
+        </div>
+    </section>
+
+    <!-- Cart Button -->
+    <button class="cart-button" id="cartBtn" onclick="openCart()" style="display: none;">
+        Place Order
+        <span class="cart-count" id="cartCount">0</span>
+    </button>
+
+    <!-- Order Summary Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2>Order Summary</h2>
+            <div class="order-summary" id="orderSummary">
+                <!-- Order items will be populated here -->
+            </div>
+            <div class="order-totals" id="orderTotals">
+                <!-- Totals will be calculated here -->
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn btn-primary" onclick="confirmOrder()">Confirm Order</button>
+                <button class="btn btn-secondary" onclick="closeCart()">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Section -->
+    <section class="social">
+        <div class="container text-center">
+            <ul>
+                <li><a href="#"><img src="https://img.icons8.com/fluent/50/000000/facebook-new.png"/></a></li>
+                <li><a href="#"><img src="https://img.icons8.com/fluent/48/000000/instagram-new.png"/></a></li>
+                <li><a href="#"><img src="https://img.icons8.com/fluent/48/000000/twitter.png"/></a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <section class="footer">
+        <div class="container text-center">
+            <p>All rights reserved. Designed By <a href="#">Your Restaurant</a></p>
+        </div>
+    </section>
+
+    <script>
+        // Food items data
+        const foodItems = {
+            1: { name: "Margherita Pizza", originalPrice: 15.99, discountedPrice: 12.99, discount: 20 },
+            2: { name: "Smoky BBQ Burger", originalPrice: 12.99, discountedPrice: 9.99, discount: 25 },
+            3: { name: "Chicken Alfredo Pasta", originalPrice: 14.99, discountedPrice: 11.99, discount: 15 },
+            4: { name: "Chicken Steam Momo", originalPrice: 8.99, discountedPrice: 6.99, discount: 30 },
+            5: { name: "Beef Tacos (3 pcs)", originalPrice: 10.99, discountedPrice: 8.99, discount: 18 },
+            6: { name: "Caesar Salad", originalPrice: 9.99, discountedPrice: 7.99, discount: 20 }
+        };
+
+        let cart = {};
+        let totalItems = 0;
+
+        function changeQuantity(itemId, change) {
+            const qtyElement = document.getElementById(`qty-${itemId}`);
+            let currentQty = parseInt(qtyElement.textContent);
+            
+            currentQty += change;
+            if (currentQty < 0) currentQty = 0;
+            
+            qtyElement.textContent = currentQty;
+            
+            // Update cart
+            if (currentQty === 0) {
+                delete cart[itemId];
+            } else {
+                cart[itemId] = currentQty;
+            }
+            
+            updateCartButton();
+        }
+
+        function updateCartButton() {
+            totalItems = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
+            const cartBtn = document.getElementById('cartBtn');
+            const cartCount = document.getElementById('cartCount');
+            
+            if (totalItems > 0) {
+                cartBtn.style.display = 'block';
+                cartCount.textContent = totalItems;
+            } else {
+                cartBtn.style.display = 'none';
+            }
+        }
+
+        function openCart() {
+            const modal = document.getElementById('orderModal');
+            const orderSummary = document.getElementById('orderSummary');
+            const orderTotals = document.getElementById('orderTotals');
+            
+            // Clear previous content
+            orderSummary.innerHTML = '';
+            
+            let subtotal = 0;
+            let totalDiscount = 0;
+            
+            // Display cart items
+            Object.keys(cart).forEach(itemId => {
+                const item = foodItems[itemId];
+                const quantity = cart[itemId];
+                const itemTotal = item.discountedPrice * quantity;
+                const itemDiscount = (item.originalPrice - item.discountedPrice) * quantity;
+                
+                subtotal += itemTotal;
+                totalDiscount += itemDiscount;
+                
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                orderItem.innerHTML = `
+                    <div>
+                        <strong>${item.name}</strong><br>
+                        <small>$${item.discountedPrice.toFixed(2)} x ${quantity}</small>
+                    </div>
+                    <div>$${itemTotal.toFixed(2)}</div>
+                `;
+                orderSummary.appendChild(orderItem);
+            });
+            
+            // Calculate totals
+            const tax = subtotal * 0.08; // 8% tax
+            const deliveryCharge = subtotal > 50 ? 0 : 5.99; // Free delivery over $50
+            const total = subtotal + tax + deliveryCharge;
+            
+            // Display totals
+            orderTotals.innerHTML = `
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>$${subtotal.toFixed(2)}</span>
+                </div>
+                <div class="total-row">
+                    <span>Discount Saved:</span>
+                    <span style="color: #52c41a;">-$${totalDiscount.toFixed(2)}</span>
+                </div>
+                <div class="total-row">
+                    <span>Tax (8%):</span>
+                    <span>$${tax.toFixed(2)}</span>
+                </div>
+                <div class="total-row">
+                    <span>Delivery Charge:</span>
+                    <span>${deliveryCharge === 0 ? 'FREE' : '$' + deliveryCharge.toFixed(2)}</span>
+                </div>
+                <div class="total-row final">
+                    <span>Total:</span>
+                    <span>$${total.toFixed(2)}</span>
+                </div>
+            `;
+            
+            modal.style.display = 'block';
+        }
+
+        function closeCart() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function confirmOrder() {
+            alert('Order confirmed! Your delicious food will be delivered soon. Thank you for choosing us!');
+            
+            // Reset cart
+            cart = {};
+            totalItems = 0;
+            
+            // Reset all quantity displays
+            Object.keys(foodItems).forEach(itemId => {
+                document.getElementById(`qty-${itemId}`).textContent = '0';
+            });
+            
+            updateCartButton();
+            closeCart();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target === modal) {
+                closeCart();
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+I want to display  the discount percentage and the amount after deducting the discount amt ,the old price  should have an x mark on it 
+
+ And also Include on each food item it should show +,- button 
+And after selecting the foods  a button should appear on bottom right  named as place order,after clicking it  should show the summary of the ordered items with  correct calculation  if the customer  order 2   same foods ,it should give correct amount,tax ,discount amount, and total  delivery charge   and atlast the total price  money
